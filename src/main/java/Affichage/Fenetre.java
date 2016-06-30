@@ -2,6 +2,8 @@ package Affichage;
 
 
 import Boutons.ChargerImage;
+import Boutons.Exit;
+import Boutons.SauvegarderImage;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -14,38 +16,53 @@ import javax.swing.KeyStroke;
 
 public class Fenetre {
 	
+    private static final int hauteurFenetre = 768;
+    private static final int largeurFenetre = 1024;
+    
 	public static void main (String args[]) {
 		
 		
 		JFrame fenetre = new JFrame ("Anamorphose");
 		JMenuBar menuBar = new JMenuBar ();
-                JMenu menu = new JMenu ("Fichiers");
-                JMenuItem menuItem = new JMenuItem ("Test menu item", KeyEvent.VK_T);
+                JMenu menuFichier = new JMenu ("Fichiers");
+                JMenu menuImage = new JMenu ("Traitement Image");
                 
+                // Menus Fichier
+                JMenuItem menuItemChargerImage = new JMenuItem ("Charger une image");
+                JMenuItem menuItemSauvegarderImage = new JMenuItem ("Sauvegarder une image");
+                JMenuItem menuItemExit = new JMenuItem ("Quitter le programme");
+                
+                // Menus Image
+                JMenuItem menuItemAnamorphoseCylindrique = new JMenuItem ("Anamorphose cylindrique");
                 
                 // Creer la fenetre
 		fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		fenetre.setPreferredSize(new Dimension(1024, 768));
+		fenetre.setPreferredSize(new Dimension(largeurFenetre, hauteurFenetre));
                 
                 
-                // Affiche le menu dans le menuBar
-                menu.setMnemonic(KeyEvent.VK_A);
-                menu.getAccessibleContext().setAccessibleDescription("Test de menu");
-                menuBar.add(menu);
-                
-                
-                // Affiche le menuItem
-                menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK));
-                menuItem.getAccessibleContext().setAccessibleDescription("This doesn't really do anything");
-                menu.add(menuItem);
-                
+                // Ajoute les menus à la barre de menu.
+                menuBar.add(menuFichier);
+                menuBar.add(menuImage);
 
-		// Affichage le bouton charger une image
-		menuItem = new JMenuItem("Charger image", new ImageIcon("src/main/resources/folder.png"));
-                menuItem.setMnemonic(KeyEvent.VK_B);
-                menuItem.addActionListener(new ChargerImage(fenetre));
-                menu.add(menuItem);
+		// Afficher le boute pour charger une image.
+		menuItemChargerImage = new JMenuItem("Charger image", new ImageIcon("src/main/resources/folder.png"));
+                menuItemChargerImage.addActionListener(new ChargerImage(fenetre));
+                menuFichier.add(menuItemChargerImage);
                 
+                // Afficher le bouton pour sauvegarder l'image.
+                menuItemSauvegarderImage = new JMenuItem("Sauvegarder image", new ImageIcon("src/main/resources/disquette.png"));
+                menuItemSauvegarderImage.addActionListener(new SauvegarderImage(fenetre));
+                menuFichier.add(menuItemSauvegarderImage);
+                
+                // Affiche le bouton pour sortir du programme.
+                menuItemExit = new JMenuItem ("Exit", new ImageIcon("src/main/resources/croix.png"));
+                menuItemExit.addActionListener(new Exit());
+                menuFichier.add(menuItemExit);
+                
+                // Afficher le bouton pour procéder à l'anamorphose cylindrique.
+                menuItemAnamorphoseCylindrique = new JMenuItem ("Anamorphose cylindrique", new ImageIcon("src/main/resources/cylindre.png"));
+                menuItemAnamorphoseCylindrique.addActionListener(new Exit()); // CHANGER L'ACTION.
+                menuImage.add(menuItemAnamorphoseCylindrique);
                 
 		// Afficher
 		fenetre.pack();
