@@ -12,27 +12,31 @@ import org.openimaj.image.DisplayUtilities;
 import org.openimaj.image.ImageUtilities;
 import org.openimaj.image.MBFImage;
 
-public class ChargerImage implements ActionListener {
-    
+public class ChargerImage implements ActionListener 
+{    
     Image _image;
 
-    public ChargerImage (Image image) {
-    
+    public ChargerImage (Image image) 
+    {    
         _image = image;
     }
     
-    public void actionPerformed(ActionEvent e) {
-        
-        // R�cup�re l'image
+    public void actionPerformed(ActionEvent e) 
+    {        
+        // recupere l'image l'image
         MBFImage source = null;
         JFileChooser fichier = new JFileChooser();
         fichier.showOpenDialog(null);
         
-        // Verrifie si le fichier s�lectionn� est une image.
-        try {
+        // Verrifie si le fichier selectione est une image.
+        try 
+        {
             source = ImageUtilities.readMBF(fichier.getSelectedFile());
-        } catch (IOException ex) {
-            System.err.printf("Veuillez sélectionner une image.");
+        } 
+        
+        catch (IOException ex) 
+        {
+            System.err.printf("Veuillez selectionner une image.");
         }
         
         _image.setImage(ImageUtilities.createBufferedImage(source));

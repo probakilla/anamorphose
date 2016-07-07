@@ -13,4 +13,8 @@ public class Image {
     public void setImage (BufferedImage image) {
         _image = image;
     }
+    
+    public BufferedImage getImage (){
+        return _image;
+    }
 }

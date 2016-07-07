@@ -27,17 +27,15 @@ import javax.swing.KeyStroke;
 public class Fenetre {
     
     private static final int HAUTEUR_FENETRE = 768;
-    private static final int LARGEUR_FENETRE = 1024;
-    private static final int HAUTEUR_CASE = 56;
-    private static final int LARGEUR_CASE = 128;
-    private static final int NB_CASES = 3;    
+    private static final int LARGEUR_FENETRE = 1024; 
     
-    public static void main (String args[]) {
+    public static void main (String args[]) 
+    {
         
-        // Creation d'une instance d'image pour sauvegarder l'image chargée.
+        // Creation d'une instance d'image pour sauvegarder l'image chargee.
         Image image = new Image ();
         
-        // Creation des diff�rents elements.
+        // Creation des differents elements.
         JFrame fenetre = new JFrame ("Anamorphose");
         JMenuBar menuBar = new JMenuBar ();
         JMenu menuFichier = new JMenu ("Fichiers");
@@ -64,7 +62,7 @@ public class Fenetre {
         charger.addActionListener(new ChargerImage(image));
         fenetre.add(sauvegarder);
         
-        // Ajoute les menus � la barre de menu.
+        // Ajoute les menus a la barre de menu.
         menuBar.add(menuFichier);
         menuBar.add(menuImage);
         
@@ -83,7 +81,7 @@ public class Fenetre {
         menuItemExit.addActionListener(new Exit());
         menuFichier.add(menuItemExit);
         
-        // Afficher le bouton pour proc�der � l'anamorphose cylindrique.
+        // Afficher le bouton pour proceder a l'anamorphose cylindrique.
         menuItemAnamorphoseCylindrique = new JMenuItem ("Anamorphose cylindrique", new ImageIcon("src/main/resources/cylindre.png"));
         menuItemAnamorphoseCylindrique.addActionListener(new Exit()); // CHANGER L'ACTION.
         menuImage.add(menuItemAnamorphoseCylindrique);
