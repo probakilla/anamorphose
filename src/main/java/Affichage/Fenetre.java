@@ -1,6 +1,7 @@
 package Affichage;
 
 
+import Boutons.AnamorphosePlane;
 import Boutons.ChargerImage;
 import Boutons.Exit;
 import Boutons.SauvegarderImage;
@@ -27,7 +28,7 @@ import javax.swing.KeyStroke;
 public class Fenetre {
     
     private static final int HAUTEUR_FENETRE = 768;
-    private static final int LARGEUR_FENETRE = 1024; 
+    private static final int LARGEUR_FENETRE = 1024;
     
     public static void main (String args[]) 
     {
@@ -83,7 +84,7 @@ public class Fenetre {
         
         // Afficher le bouton pour proceder a l'anamorphose cylindrique.
         menuItemAnamorphoseCylindrique = new JMenuItem ("Anamorphose cylindrique", new ImageIcon("src/main/resources/cylindre.png"));
-        menuItemAnamorphoseCylindrique.addActionListener(new Exit()); // CHANGER L'ACTION.
+        menuItemAnamorphoseCylindrique.addActionListener(new AnamorphosePlane(image)); // CHANGER L'ACTION.
         menuImage.add(menuItemAnamorphoseCylindrique);
         
         // Afficher
