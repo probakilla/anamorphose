@@ -1,6 +1,7 @@
 package Affichage;
 
 
+import Boutons.AnamorphoseCylindrique;
 import Boutons.AnamorphosePlane;
 import Boutons.ChargerImage;
 import Boutons.Exit;
@@ -84,7 +85,7 @@ public class Fenetre {
         
         // Afficher le bouton pour proceder a l'anamorphose cylindrique.
         menuItemAnamorphoseCylindrique = new JMenuItem ("Anamorphose cylindrique", new ImageIcon("src/main/resources/cylindre.png"));
-        menuItemAnamorphoseCylindrique.addActionListener(new AnamorphosePlane(image)); // CHANGER L'ACTION.
+        menuItemAnamorphoseCylindrique.addActionListener(new AnamorphoseCylindrique(image)); // CHANGER L'ACTION.
         menuImage.add(menuItemAnamorphoseCylindrique);
         
         // Afficher
