@@ -2,93 +2,108 @@ package Affichage;
 
 
 import Boutons.AnamorphoseCylindrique;
-import Boutons.AnamorphosePlane;
 import Boutons.ChargerImage;
 import Boutons.Exit;
 import Boutons.SauvegarderImage;
-import java.awt.Color;
+import Boutons.changementPlan;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Panel;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.KeyStroke;
+
 
 public class Fenetre {
     
-    private static final int HAUTEUR_FENETRE = 768;
-    private static final int LARGEUR_FENETRE = 1024;
+    private static final int HAUTEUR_FENETRE = 600;
+    private static final int LARGEUR_FENETRE = 800;
     
-    public static void main (String args[]) 
+    public static void main (String args[])
     {
         
         // Creation d'une instance d'image pour sauvegarder l'image chargee.
         Image image = new Image ();
         
-        // Creation des differents elements.
+        // Creation de la fenetre et du layout.
         JFrame fenetre = new JFrame ("Anamorphose");
+        fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        fenetre.setPreferredSize(new Dimension(LARGEUR_FENETRE, HAUTEUR_FENETRE));
+        fenetre.setLayout(new FlowLayout(FlowLayout.LEFT, 15, 10));  
+
+        
+        // ======= Ajout des menus =======
+        
         JMenuBar menuBar = new JMenuBar ();
         JMenu menuFichier = new JMenu ("Fichiers");
         JMenu menuImage = new JMenu ("Traitement Image");
-        JButton charger = new JButton ("Charger");
-        JButton sauvegarder = new JButton ("Sauvegarder");
-        JButton anamorphose = new JButton ("Anamorphose");
         
         // Menus Fichier.
         JMenuItem menuItemChargerImage = new JMenuItem ("Charger une image");
         JMenuItem menuItemSauvegarderImage = new JMenuItem ("Sauvegarder une image");
         JMenuItem menuItemExit = new JMenuItem ("Quitter le programme");
         
-        // Menus Image.
+        // Menu Image.
         JMenuItem menuItemAnamorphoseCylindrique = new JMenuItem ("Anamorphose cylindrique");
+        JMenuItem menuItemChangementPlan = new JMenuItem ("Changement de Plan");
         
-        // Creer la fenetre.
-        fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        fenetre.setPreferredSize(new Dimension(LARGEUR_FENETRE, HAUTEUR_FENETRE));
-        fenetre.setLayout(new FlowLayout(FlowLayout.LEFT, 15, 10));
-        
-        // Ajoute les boutons.
-        fenetre.add(charger);
-        charger.addActionListener(new ChargerImage(image));
-        fenetre.add(sauvegarder);
-        
-        // Ajoute les menus a la barre de menu.
+        // Ajout des menus a la barre de menu.
         menuBar.add(menuFichier);
         menuBar.add(menuImage);
         
-        // Afficher le bouton pour charger une image.
+        // ======== Gestion des boutons des menus =========
+        
+        // Ajout des boutons dans le menu fichier.
+        // Charger.
         menuItemChargerImage = new JMenuItem("Charger image", new ImageIcon("src/main/resources/folder.png"));
-        menuItemChargerImage.addActionListener(new ChargerImage(image));
         menuFichier.add(menuItemChargerImage);
+        menuItemChargerImage.addActionListener(new ChargerImage(image));
         
-        // Afficher le bouton pour sauvegarder l'image.
+        // Sauvegarder.
         menuItemSauvegarderImage = new JMenuItem("Sauvegarder image", new ImageIcon("src/main/resources/disquette.png"));
-        menuItemSauvegarderImage.addActionListener(new SauvegarderImage(fenetre));
         menuFichier.add(menuItemSauvegarderImage);
+        menuItemSauvegarderImage.addActionListener(new SauvegarderImage(fenetre));
         
-        // Affiche le bouton pour sortir du programme.
-        menuItemExit = new JMenuItem ("Exit", new ImageIcon("src/main/resources/croix.png"));
-        menuItemExit.addActionListener(new Exit());
+        // Sortir du programme.
+        menuItemExit = new JMenuItem ("Quitter le programme", new ImageIcon("src/main/resources/croix.png"));
         menuFichier.add(menuItemExit);
+        menuItemExit.addActionListener(new Exit());
         
-        // Afficher le bouton pour proceder a l'anamorphose cylindrique.
+        // Ajout des boutons dans le menu Traitement d'image.
+        // Changement de plan.
+        menuItemChangementPlan = new JMenuItem ("Changement de plan", new ImageIcon("src/main/resources/cube.png"));
+        menuImage.add(menuItemChangementPlan);
+        menuItemChangementPlan.addActionListener(new changementPlan(image));
+        
+        // Anamorhose cylindrique.
         menuItemAnamorphoseCylindrique = new JMenuItem ("Anamorphose cylindrique", new ImageIcon("src/main/resources/cylindre.png"));
-        menuItemAnamorphoseCylindrique.addActionListener(new AnamorphoseCylindrique(image)); // CHANGER L'ACTION.
         menuImage.add(menuItemAnamorphoseCylindrique);
+        menuItemAnamorphoseCylindrique.addActionListener(new AnamorphoseCylindrique(image));
         
-        // Afficher
+        // ======== Gestion des boutons ========
+                
+        // Charger.
+        JButton charger = new JButton ("Charger", new ImageIcon("src/main/resources/folder.png"));
+        fenetre.add (charger);
+        charger.addActionListener(new ChargerImage(image));
+        
+        // Sauvegarder.
+        JButton sauvegarder = new JButton ("Sauvegarder", new ImageIcon("src/main/resources/disquette.png"));
+        fenetre.add (sauvegarder);
+        
+        // Changement de plan.
+        JButton changementPlan = new JButton ("Changement de plan", new ImageIcon("src/main/resources/cube.png"));
+        fenetre.add (changementPlan);
+        changementPlan.addActionListener(new changementPlan(image));
+                
+        // Anamorphose Cylindrique.
+        JButton anamorphoseCylindrique = new JButton ("Anamorphose Cylindrique", new ImageIcon("src/main/resources/cylindre.png"));
+        fenetre.add (anamorphoseCylindrique);
+        anamorphoseCylindrique.addActionListener(new AnamorphoseCylindrique(image));
+        
+        // Afficher la fenetre.
         fenetre.pack();
         fenetre.setVisible(true);
         fenetre.setJMenuBar(menuBar);

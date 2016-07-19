@@ -9,11 +9,11 @@ import java.awt.image.BufferedImage;
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 import org.openimaj.image.DisplayUtilities;
 
-public class AnamorphosePlane implements ActionListener 
+public class changementPlan implements ActionListener 
 {    
     Image _image = null;
     
-    public AnamorphosePlane (Image image) 
+    public changementPlan (Image image) 
     {        
         _image = image;
     }
