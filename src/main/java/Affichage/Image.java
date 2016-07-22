@@ -2,19 +2,22 @@ package Affichage;
 
 import java.awt.image.BufferedImage;
 
-public class Image {
-
+public class Image 
+{
     public BufferedImage _image;
     
-    public Image () {
+    public Image () 
+    {
         _image = null;
     }
     
-    public void setImage (BufferedImage image) {
+    public void setImage (BufferedImage image) 
+    {
         _image = image;
     }
     
-    public BufferedImage getImage (){
+    public BufferedImage getImage ()
+    {
         return _image;
     }
 }
