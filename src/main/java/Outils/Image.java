@@ -1,4 +1,4 @@
-package Affichage;
+package Outils;
 
 import java.awt.image.BufferedImage;
 

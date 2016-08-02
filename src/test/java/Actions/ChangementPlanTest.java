@@ -7,7 +7,7 @@ import javax.swing.JButton;
 
 import org.junit.Test;
 
-import Affichage.Image;
+import Outils.Image;
 
 public class ChangementPlanTest 
 {
@@ -26,29 +26,28 @@ public class ChangementPlanTest
 	private final int COULEUR_PREMIER_PIXEL = 150;
 	private final int COULEUR_DEUXIEME_PIXEL = 30;
 	private final int COULEUR_LIGNE = 196;
-	
-	private BufferedImage imageTest = new BufferedImage (LARGEUR_IMAGE, HAUTEUR_IMAGE, TYPE_INT_RGB);
 
-	private BufferedImage initialiserImage (BufferedImage image) 
+	private BufferedImage initialiserImage () 
 	{
+		BufferedImage tmp = new BufferedImage (LARGEUR_IMAGE, HAUTEUR_IMAGE, TYPE_INT_RGB);
 		// Placement des pixels.
-		image.setRGB (X_PREMIER_PIXEL, Y_PREMIER_PIXEL, COULEUR_PREMIER_PIXEL);
-		image.setRGB (X_DEUXIEME_PIXEL, Y_DEUXIEME_PIXEL, COULEUR_DEUXIEME_PIXEL);
+		tmp.setRGB (X_PREMIER_PIXEL, Y_PREMIER_PIXEL, COULEUR_PREMIER_PIXEL);
+		tmp.setRGB (X_DEUXIEME_PIXEL, Y_DEUXIEME_PIXEL, COULEUR_DEUXIEME_PIXEL);
 		
 		// Placement de la ligne.
 		for (int x = 0; x < LARGEUR_IMAGE; x ++)
-			image.setRGB (x, HAUTEUR_LIGNE, COULEUR_LIGNE);
+			tmp.setRGB (x, HAUTEUR_LIGNE, COULEUR_LIGNE);
 		
-		return image;
+		return tmp;
 	}
 	
 	@Test
 	public void test() 
 	{
 		// Initialisation de l'image de test avec la classe Image.
-		imageTest = initialiserImage (imageTest);
+		BufferedImage test = initialiserImage ();
 		Image imageClasse = new Image ();
-		imageClasse.setImage (imageTest);
+		imageClasse.setImage (test);
 		
 		// Creation du bouton a tester.
 		JButton changementPlan = new JButton ("Changement de plan");
@@ -58,11 +57,11 @@ public class ChangementPlanTest
 		// Verrification de l'image creee.
 		BufferedImage imageArrivee = imageClasse.getImage (); // On recupere l'image creee.
 		// Verrification des pixels.
-		assertEquals ("Devrait valoir : " + COULEUR_PREMIER_PIXEL, COULEUR_PREMIER_PIXEL, imageArrivee.getRGB (X_PREMIER_PIXEL, Y_PREMIER_PIXEL));
-		assertEquals ("Devrait valoir : " + COULEUR_DEUXIEME_PIXEL, COULEUR_DEUXIEME_PIXEL, imageArrivee.getRGB (X_DEUXIEME_PIXEL, Y_DEUXIEME_PIXEL));
+		assertEquals (COULEUR_PREMIER_PIXEL, imageArrivee.getRGB (X_PREMIER_PIXEL, Y_PREMIER_PIXEL));
+		assertEquals (COULEUR_DEUXIEME_PIXEL, imageArrivee.getRGB (X_DEUXIEME_PIXEL, Y_DEUXIEME_PIXEL));
 		// Verrification de la ligne.
 		for (int x = 0; x < LARGEUR_IMAGE; x ++) {
-			assertEquals ("Devrait valoir : " + COULEUR_LIGNE, COULEUR_LIGNE, imageArrivee.getRGB(x, HAUTEUR_LIGNE));
+			assertEquals (COULEUR_LIGNE, imageArrivee.getRGB(x, HAUTEUR_LIGNE));
 		}
 	}
 }

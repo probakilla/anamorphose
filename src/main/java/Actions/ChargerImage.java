@@ -1,14 +1,12 @@
 package Actions;
 
-import Affichage.Fenetre;
 import Affichage.FenetreErreur;
-import Affichage.Image;
+import Outils.Image;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import org.openimaj.image.DisplayUtilities;
 import org.openimaj.image.ImageUtilities;
 import org.openimaj.image.MBFImage;

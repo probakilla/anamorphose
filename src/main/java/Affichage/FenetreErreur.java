@@ -1,6 +1,5 @@
 package Affichage;
 
-import Actions.QuitterProgramme;
 import Actions.QuitterFenetre;
 import java.awt.Dimension;
 import java.awt.FlowLayout;

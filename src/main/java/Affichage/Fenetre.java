@@ -5,6 +5,7 @@ import Actions.AnamorphoseCylindrique;
 import Actions.ChargerImage;
 import Actions.QuitterProgramme;
 import Actions.SauvegarderImage;
+import Outils.Image;
 import Actions.ChangementPlan;
 import java.awt.Dimension;
 import java.awt.FlowLayout;

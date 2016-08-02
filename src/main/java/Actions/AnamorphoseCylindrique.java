@@ -1,12 +1,11 @@
 package Actions;
 
-import Affichage.Image;
+import Outils.Image;
 import Outils.TableauPixels3D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
-import java.time.Clock;
 import org.openimaj.image.DisplayUtilities;
 
 public class AnamorphoseCylindrique implements ActionListener
@@ -53,89 +52,68 @@ public class AnamorphoseCylindrique implements ActionListener
         BufferedImage imgArrive = new BufferedImage (largeurArrivee, hauteurArrivee, TYPE_INT_RGB);
         
         /*
-        * On trace un cercle grace a l'algorithme de Bersenham.
+        * On trace un cercle grace a l'algorithme de Bresenham.
         * Cet algorithme trace un octant de cercle,
         * pour tracer un cercle complet (ou ici un demi cercle),
         * il nous suffit juste de tracer les autres octants grace a une symetrie.
-        * Pour faire correspondre l'image au cercle dessine nous divisions notre
-        * image en quatre ce qui nous donne quatre variables (quart1, quart2 etc...)
-        * qui nous servent a placer les pixels de chaque quart de l'image.
         */
         
         // Variable temporaire.
-        int RGBtmp;
-        double angle = 180 / (largeur - 1);
-        int centreImage = largeur / 2;
-        int centre = tableau3D.getWidth() / 2;
+        int RGBtmp = 200; // On place une valeur fixe dans la variable RGBtmp une valeure arbitraire pour voir si l'algorithme fonctionne.
+        double angle = Math.PI * (180 / (largeur - 1)) / 180 ; // Transformation en radian.
+        int centreImage = largeur / 2; // Correspond au centre de l'image chargée.
+        int centre = tableau3D.getWidth() / 2; // Correspond au centre de l'image de sortie.
         
         // On place d'abord placer les premiers points de chaque octant de cercle.
-        //for (int y = 0; y < hauteur; y ++) {
-        int x, z, d, quart1, quart2, quart3, quart4;
+        int x, z, d;
         double a, b;
         // Variables utilisees pour garder en memoire la valeur des coordonnes des points de l'ancien tour de boucle.
         int x1Pre, y1Pre, x2Pre, y2Pre, x3Pre, y3Pre, x4Pre, y4Pre;
         
+        /*
+        * On commence par initialiser les variables nécessaires pour dessiner le cercle.
+        */
         x = 0;
         z = rayon;
         d = 1 - rayon;
-        quart1 = 0;
-        quart2 = centreImage;
-        quart3 = centreImage + 1;
-        quart4 = largeur - 1;
         // Place le premier point du premier quart de l'image.
-        RGBtmp = anamorphose.getRGB(quart1, 0);
         tableau3D.setPixel(centre - rayon, 0, 0, RGBtmp);
         // Trace la première ligne droite.
-        for (int xTmp = (centre - rayon); xTmp >= ((centre - rayon) - hauteur); xTmp --) {
-            int tmp = 1; // Variable necessaire pour la couleur d'une colonne.
-            RGBtmp = anamorphose.getRGB(quart1, tmp++);
+        for (int xTmp = (centre - rayon); xTmp >= ((centre - rayon) - hauteur); xTmp --) 
             tableau3D.setPixel(xTmp, 0, 0, RGBtmp);
-        }
+        // sauvegarde  les coordonnées du point pour le prochain passage de boucle
         x1Pre = ((centre - rayon) - hauteur);
         y1Pre = 0;
-        quart1++;
         
         // Place le premier point du deuxieme quart de l'image.
-        RGBtmp = anamorphose.getRGB(quart2, 0);
         tableau3D.setPixel(centre, 0, rayon, RGBtmp);
         // Trace la deuxieme ligne droite.
-        for (int yTmp = rayon; yTmp < (rayon + hauteur); yTmp ++) {
-            int tmp = 1;
-            RGBtmp = anamorphose.getRGB(quart2, tmp++);
+        for (int yTmp = rayon; yTmp < (rayon + hauteur); yTmp ++) 
             tableau3D.setPixel(centre, 0, yTmp, RGBtmp);
-        }
         x2Pre = centre;
         y2Pre = (rayon + hauteur);
-        quart2--;
+
         
         // Place le premier point du troisieme quart de l'image.
-        RGBtmp = anamorphose.getRGB(quart3, 0);
         tableau3D.setPixel(centre + 1, 0, rayon, RGBtmp);
         // Trace la troiseme ligne droite
-        for (int yTmp = rayon; yTmp < (rayon + hauteur); yTmp ++) {
-            int tmp = 1;
-            RGBtmp = anamorphose.getRGB(quart3, tmp++);
+        for (int yTmp = rayon; yTmp < (rayon + hauteur); yTmp ++) 
             tableau3D.setPixel(centre + 1, 0, yTmp, RGBtmp);
-        }
         x3Pre = centre + 1;
         y3Pre = (rayon + hauteur);
-        quart3++;
         
         // Place le premier point du quatrieme quart de l'image.
-        RGBtmp = anamorphose.getRGB(quart4, 0);
         tableau3D.setPixel(centre + rayon, 0, 0, RGBtmp);
         // Trace la quatrieme ligne droite.
-        for (int xTmp = (centre + rayon); xTmp < ((centre + rayon) + hauteur); xTmp ++) {
-            int tmp = 1; // Variable necessaire pour la couleur d'une colonne.
-            RGBtmp = anamorphose.getRGB(quart4, tmp++);
+        for (int xTmp = (centre + rayon); xTmp < ((centre + rayon) + hauteur); xTmp ++)
             tableau3D.setPixel(xTmp, 0, 0, RGBtmp);
-        }
         x4Pre = ((centre + rayon) + hauteur);
         y4Pre = 0;
-        quart4++;
+
         
-        // On dessine ensuite le reste des onctants.
-        while (z > x) {
+        // On dessine ensuite le reste des onctants avec l'algorithme de Bresenham.
+        while (z > x) 
+        {
             if (d < 0) {
                 d += 2 * x + 3;
             }
@@ -145,31 +123,37 @@ public class AnamorphoseCylindrique implements ActionListener
             }
             x ++;
             
+            // Maintenant on place les droites de chaque octant.
+            
             // Place le pixel du premier quart.
             tableau3D.setPixel((centre - x), 0, z, RGBtmp);
-            int nouveauX = nouveauX (angle, x1Pre, y1Pre, centre, 0);
+            int nouveauX = nouveauX (angle, x1Pre, y1Pre, centre, 0); // Décale les coordonnees du point le plus éloigné du cercle pour tracer la droite.
             int nouveauY = nouveauY (angle, x1Pre, y1Pre, centre, 0);
-            a = (double) ((nouveauY - z) / (nouveauX - (centre - x)));
+            // Calcule les variables necessaires pour tracer la droite.
+            a = (double) ((nouveauY - z) / (nouveauX - (centre - x))); 
             b = z - (a * (centre - x));
-            for (int xTmp = (centre - x); xTmp < nouveauX; x --) {
-                int tmp = 1;
+            for (int xTmp = (centre - x); xTmp < nouveauX; x --) 
+            {
+                // Trace la droite grâce à l'algorithme de Bresenham qui utilise l'équation d'une droite affine.
                 int yTmp = (int) ((a * xTmp) + b);
-                RGBtmp = 200;
                 tableau3D.setPixel(xTmp, 0, yTmp, RGBtmp);
             }
             x1Pre = nouveauX;
             y1Pre = nouveauY;
             
+            // On répète l'action pour les autres octants.
+            
             // Place le pixel du deuxieme quart.
             tableau3D.setPixel((centre - z), 0, x, RGBtmp);
-            
+    
             // Place le pixel du troisieme quart.
             tableau3D.setPixel((centre + x), 0, z, RGBtmp);
             nouveauX = nouveauX (angle, x3Pre, y3Pre, centre, 0);
             nouveauY = nouveauY (angle, x3Pre, y3Pre, centre, 0);
             //a = (double) ((nouveauY - z) / (nouveauX - (centre + x)));
             b = z - (a * (centre + x));
-            for (int xTmp = x; xTmp < nouveauX; xTmp++) {
+            for (int xTmp = x; xTmp < nouveauX; xTmp++) 
+            {
                 int yTmp = (int) ((a * xTmp) + b);
                 tableau3D.setPixel(xTmp, 0, yTmp, 200);
             }
@@ -182,8 +166,10 @@ public class AnamorphoseCylindrique implements ActionListener
         }
         
         // Remplie la nouvelle image avec celle transforee.
-        for (int zt = 0; zt < hauteurArrivee; zt ++) {
-            for (int xt = 0; xt < largeurArrivee; xt ++) {
+        for (int zt = 0; zt < hauteurArrivee; zt ++)
+        {
+            for (int xt = 0; xt < largeurArrivee; xt ++) 
+            {
                 RGBtmp = tableau3D.getPixel(xt, 0, zt);
                 imgArrive.setRGB(xt, zt, RGBtmp);
             }

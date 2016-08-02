@@ -1,6 +1,5 @@
 package Actions;
 
-import static cern.clhep.Units.s;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;

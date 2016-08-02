@@ -1,8 +1,7 @@
 package Actions;
 
-import Affichage.Image;
+import Outils.Image;
 import Outils.TableauPixels3D;
-import java.awt.GraphicsConfiguration;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -56,6 +55,7 @@ public class ChangementPlan implements ActionListener
             }
         }
         // Affiche l'image choisie.
+        _image.setImage(imgArrive);
         DisplayUtilities.display(imgArrive);
     }
 }
