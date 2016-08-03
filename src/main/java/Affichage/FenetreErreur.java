@@ -33,7 +33,7 @@ public class FenetreErreur
         _erreur.add(messageErreur);
         
         // Ajoute un bouton pour quitter la fenetre.
-        JButton quitter = new JButton ("Quitter");
+        JButton quitter = new JButton ("Fermer");
         quitter.addActionListener(new QuitterFenetre(_erreur));
         _erreur.add(quitter);
         
